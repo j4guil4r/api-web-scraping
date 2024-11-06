@@ -27,7 +27,11 @@ def lambda_handler(event, context):
         }
 
     # Extraer los encabezados de la tabla
-    headers = [header.text for header in table.find_all('th')]
+    headers = []
+    for th in table.find_all('th'):
+        text = th.get_text(strip=True)
+        headers.append(text)
+    headers = headers[:4] 
 
     # Extraer las filas de la tabla
     rows = []
@@ -37,7 +41,7 @@ def lambda_handler(event, context):
 
     # Guardar los datos en DynamoDB
     dynamodb = boto3.resource('dynamodb')
-    table = dynamodb.Table('TablaWebScrappingSismos')
+    table = dynamodb.Table('TablaWebScrapping_sismos')
 
     # Eliminar todos los elementos de la tabla antes de agregar los nuevos
     scan = table.scan()
