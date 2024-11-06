@@ -5,7 +5,7 @@ import uuid
 
 def lambda_handler(event, context):
     # URL de la página web que contiene la tabla
-    url = "https://ultimosismo.igp.gob.pe/ultimo-sismo/sismos-reportados"
+    url = "https://sgonorte.bomberosperu.gob.pe/24horas/?criterio=/"
 
     # Realizar la solicitud HTTP a la página web
     response = requests.get(url)
@@ -19,7 +19,7 @@ def lambda_handler(event, context):
     soup = BeautifulSoup(response.content, 'html.parser')
 
     # Encontrar la tabla en el HTML
-    table = soup.find('table', {'class': 'table table-hover table-bordered table-light border-white w-100'})
+    table = soup.find('table')
     if not table:
         return {
             'statusCode': 404,
@@ -27,11 +27,7 @@ def lambda_handler(event, context):
         }
 
     # Extraer los encabezados de la tabla
-    headers = []
-    for th in table.find_all('th'):
-        text = th.get_text(strip=True)
-        headers.append(text)
-    headers = headers[:4] 
+    headers = [header.text for header in table.find_all('th')]
 
     # Extraer las filas de la tabla
     rows = []
@@ -41,7 +37,7 @@ def lambda_handler(event, context):
 
     # Guardar los datos en DynamoDB
     dynamodb = boto3.resource('dynamodb')
-    table = dynamodb.Table('TablaWebScrapping_sismos')
+    table = dynamodb.Table('TablaWebScrapping')
 
     # Eliminar todos los elementos de la tabla antes de agregar los nuevos
     scan = table.scan()
