@@ -25,10 +25,10 @@ functions:
 
 resources:
   Resources:
-    TablaWebScrapping:
+    TablaWebScrapping_sismos:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: TablaWebScrapping
+        TableName: TablaWebScrapping_sismos
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
