@@ -4,33 +4,32 @@ service: api-web-scraping
 provider:
   name: aws
   runtime: python3.12
-  # Default memory size for functions (default: 1024MB)
   memorySize: 1024
   timeout: 30
   iam:
     role: arn:aws:iam::004546874381:role/LabRole
 
 functions:
-  scrape_table:
-    handler: scrap_table.lambda_handler  # Asegúrarse de que el nombre del archivo y la función coincidan
+  extraer_tabla:
+    handler: scrap_table.lambda_handler  # Asegurarse de que el nombre del archivo y la función coincidan
     package:
       include:
         - ./**  # Incluir todo el contenido del directorio
     events:
       - http:
-          path: /scrape/table
+          path: /extraer/tabla
           method: get
           cors: true
           integration: lambda
 
-  scrape_sismos:
-    handler: scrap_sismos.lambda_handler
+  extraer_sismos:
+    handler: scrape_sismos.lambda_handler  # Nombre de la función y archivo actualizado
     package:
       include:
         - ./**  # Incluir todo el contenido del directorio
     events:
       - http:
-          path: /scrape/sismos
+          path: /extraer/sismos
           method: get
           cors: true
           integration: lambda
