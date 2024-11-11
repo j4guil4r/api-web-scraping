@@ -23,7 +23,7 @@ functions:
           integration: lambda
 
   extraer_sismos:
-    handler: scrape_sismos.lambda_handler  # Nombre de la función y archivo actualizado
+    handler: scrap_sismos.lambda_handler  # Nombre de la función y archivo actualizado
     package:
       include:
         - ./**  # Incluir todo el contenido del directorio
