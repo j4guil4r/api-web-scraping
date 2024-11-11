@@ -5,7 +5,7 @@ import uuid
 
 def lambda_handler(event, context):
     # URL de la página web de sismos
-    url = "https://ultimosismo.igp.gob.pe/ultimo-sismo/sismos-reportados"
+    url = "https://ultimosismo.igp.gob.pe/api/ultimo-sismo/ajaxb/2024"
 
     # Realizar la solicitud HTTP a la página web
     response = requests.get(url)
